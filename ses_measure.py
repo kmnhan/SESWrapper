@@ -1,6 +1,6 @@
 import numpy as np
-from ses_functions import SESFunctions
 from configparser import ConfigParser
+from .ses_functions import SESFunctions
 
 
 class SESMeasure:

@@ -8,7 +8,7 @@ Created on Sat Mar 23 14:00:29 2019
 
 ### test API:
 
-from ses_measure import SESMeasure
+from .ses_measure import SESMeasure
 from motors import MotorController
 
 

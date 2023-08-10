@@ -1,10 +1,10 @@
 """Wraps the dll in pure python."""
-
-from ses_dll import SESdll
-from ses_error import SESError
 import ctypes
-from structs import AnalyzerRegion, DetectorRegion, DetectorInfo
+
 import numpy as np
+from .ses_dll import SESdll
+from .ses_error import SESError
+from .structs import AnalyzerRegion, DetectorRegion, DetectorInfo
 
 
 class SESFunctions:
