@@ -1,12 +1,4 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Mar 28 10:42:20 2019
-
-@author: berend
-"""
-
-## sesfunctions: wraps the dll in pure python
+"""Wraps the dll in pure python."""
 
 from ses_dll import SESdll
 from ses_error import SESError
