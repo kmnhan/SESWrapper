@@ -3,10 +3,7 @@
 
 class SESError:
     def __init__(self, verbose=False):
-        """
-        ta
-        """
-        self.verbose = False
+        self.verbose = verbose
         self.errors = {
             -1: RuntimeError("ERR_UNKNOWN"),
             -2: RuntimeError("ERR_FAIL"),
@@ -33,6 +30,7 @@ class SESError:
 
         self.warnings = {
             313: "Failed to zero supplies",
+            501: "An acquisition is already running",
         }
 
     def error(self, intcode):
@@ -48,9 +46,9 @@ class SESError:
 
         elif intcode > 0:
             if intcode in self.warnings:
-                print(self.warnings[intcode])
+                print(f"Warning {intcode}: {self.warnings[intcode]}")
             else:
-                print("An unkown warning occured with code {}".format(intcode))
+                print(f"An unkown warning occured with code {intcode}")
 
         else:
             if self.verbose:
