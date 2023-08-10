@@ -128,7 +128,7 @@ class SESFunctions:
 
         if type(value) == int:
             if self.verbose:
-                print("Setting int property")
+                print(f'Setting int property  "{pname}" to {value}')
             value = ctypes.c_int(value)
             pname = pname.encode("ASCII")
             # Note: not sure about the -1 for size, using what is in the tutorial for SESwrapper
@@ -137,7 +137,7 @@ class SESFunctions:
             )  ##middle argument is size,
         if type(value) == float:
             if self.verbose:
-                print("Setting double/float property")
+                print(f'Setting double/float property  "{pname}" to {value}')
             value = ctypes.c_double(value)
             pname = pname.encode("ASCII")
             self.e.error(
@@ -145,7 +145,7 @@ class SESFunctions:
             )  ##middle argument is size
         if type(value) == str:
             if self.verbose:
-                print("Setting string property")
+                print(f'Setting string property  "{pname}" to {value}')
             value = value.encode("ASCII")
             pname = pname.encode("ASCII")
             self.e.error(
