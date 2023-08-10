@@ -559,6 +559,11 @@ class SESFunctions:
 
         return data
 
+    def OpenGUI(self, name: str):
+        if not name.startswith("GDS_"):
+            name = "GDS_" + name
+        return self.e.error(self.sesdll.OpenGUI(ctypes.c_char_p(name.encode("ASCII"))))
+
     def Finalize(self):
         """Finalize the instrument
         Args: None

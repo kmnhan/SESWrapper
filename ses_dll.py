@@ -578,3 +578,14 @@ class SESdll:
         self.ContinueAcquisition = funcproto(
             ("WRP_ContinueAcquisition", self.sesdll), funcparams
         )
+
+        ####### OpenGUI:
+
+        funcproto = ctypes.WINFUNCTYPE(
+            ctypes.c_int,
+            ctypes.c_char_p,  # file name
+        )
+
+        funcparams = ((1, "name"),)
+
+        self.OpenGUI = funcproto(("WRP_OpenGUI", self.sesdll), funcparams)
