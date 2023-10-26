@@ -11,7 +11,7 @@ class SESMeasure:
         ses_instrument="",
         inst_path="",
         verbose=False,
-        element_set="High Pass (UPS)",
+        element_set="Low Pass (UPS)",
         motorcontrol=None,
     ):
         """ """
