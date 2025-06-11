@@ -1,5 +1,5 @@
 import ctypes
-from .structs import AnalyzerRegion, DetectorRegion, DetectorInfo
+from seswrapper.structs import AnalyzerRegion, DetectorRegion, DetectorInfo
 
 
 class SESdll:

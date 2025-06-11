@@ -1,6 +1,6 @@
 import numpy as np
 from configparser import ConfigParser
-from .ses_functions import SESFunctions
+from seswrapper.ses_functions import SESFunctions
 
 
 class SESMeasure:
@@ -9,17 +9,16 @@ class SESMeasure:
         dllpath,
         ses_dir,
         ses_instrument="",
-        inst_path="",
         verbose=False,
         element_set="Low Pass (UPS)",
-        motorcontrol=None,
+        # motorcontrol=None,
     ):
         """ """
 
         self.ses = SESFunctions(dllpath, verbose=verbose)
 
         self.ses.SetProperty("lib_working_dir", ses_dir)
-        self.ses.SetProperty("instrument_library", ses_instrument)
+        # self.ses.SetProperty("instrument_library", ses_instrument)
 
         ## Note: change ini file here
         self.ini_path = ses_dir + "/ini/DetectorGraph.ini"
@@ -34,11 +33,11 @@ class SESMeasure:
 
         self.ses.Initialize()
 
-        self.ses.LoadInstrument(inst_path)
+        # self.ses.LoadInstrument(inst_path)
 
         self.ses.SetProperty("element_set", element_set)
 
-        self.motorcontrol = motorcontrol
+        # self.motorcontrol = motorcontrol
 
     def __enter__(self, test):  ##for syntax like "with SES() as ses:"
         pass
@@ -46,7 +45,7 @@ class SESMeasure:
     def __exit__(self, test):
         pass
 
-    def MeasureAnalyzerRegion(self, region, data=None, updatefreq="slice", path=None):
+    def MeasureAnalyzerRegion(self, region, data=None, updatefreq="slice"):
         """
         Measure a region with SES.
         Args:
@@ -87,41 +86,37 @@ class SESMeasure:
         self.ses.StopAcquisition()
 
         data = data.reshape((slices, channels))
-
-        if path is not None:
-            np.savetxt(path, data)
-
         return data, slice_scale, channel_scale
 
-    def MeasureWithMotors(self, region, motor_paths):
-        """
-        region: see above
-        motor_paths: dictionary of axis name and array of values: 'P' : np.array([0, 0.5,1.0])
-               Assumed to all be the same length
-        """
-        if self.motorcontrol is None:
-            print("Please give motorcontrol object")
+    # def MeasureWithMotors(self, region, motor_paths):
+    #     """
+    #     region: see above
+    #     motor_paths: dictionary of axis name and array of values: 'P' : np.array([0, 0.5,1.0])
+    #            Assumed to all be the same length
+    #     """
+    #     if self.motorcontrol is None:
+    #         print("Please give motorcontrol object")
 
-        n_steps = next(iter(motor_paths.values())).size
+    #     n_steps = next(iter(motor_paths.values())).size
 
-        for i in range(n_steps):
-            print("Taking step ", i)
-            ## move motors:
-            for ax, v_arr in motor_paths.items():
-                print("Moving motor {} to {:.2f}".format(ax, v_arr[i]))
-                r = self.motorcontrol.move_axis(ax, v_arr[i], s=0.1)
-                print("Response was:")
-                self.motorcontrol.print_response(r)
-            print("Taking image:")
+    #     for i in range(n_steps):
+    #         print("Taking step ", i)
+    #         ## move motors:
+    #         for ax, v_arr in motor_paths.items():
+    #             print("Moving motor {} to {:.2f}".format(ax, v_arr[i]))
+    #             r = self.motorcontrol.move_axis(ax, v_arr[i], s=0.1)
+    #             print("Response was:")
+    #             self.motorcontrol.print_response(r)
+    #         print("Taking image:")
 
-            data_step, slice_scale, channel_scale = self.MeasureAnalyzerRegion(
-                region.copy(), data=None, updatefreq="slice", path=None
-            )
-            if i == 0:
-                data = np.zeros(data_step.shape + (n_steps,))
-            data[:, :, i] = data_step
+    #         data_step, slice_scale, channel_scale = self.MeasureAnalyzerRegion(
+    #             region.copy(), data=None, updatefreq="slice", path=None
+    #         )
+    #         if i == 0:
+    #             data = np.zeros(data_step.shape + (n_steps,))
+    #         data[:, :, i] = data_step
 
-        return data, slice_scale, channel_scale
+    #     return data, slice_scale, channel_scale
 
     def Finalize(self):
         ## Note: change ini file here

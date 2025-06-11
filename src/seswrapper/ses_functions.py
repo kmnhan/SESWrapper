@@ -2,9 +2,9 @@
 import ctypes
 
 import numpy as np
-from .ses_dll import SESdll
-from .ses_error import SESError
-from .structs import AnalyzerRegion, DetectorRegion, DetectorInfo
+from seswrapper.ses_dll import SESdll
+from seswrapper.ses_error import SESError
+from seswrapper.structs import AnalyzerRegion, DetectorRegion, DetectorInfo
 
 
 class SESFunctions:
